@@ -1,0 +1,6 @@
+[
+  { "id": "container-text-assistant", "label": "Text Assistant" },
+  { "id": "container-code-assistant", "label": "Code Assistant" },
+  { "id": "container-academic-assistant", "label": "Academic Assistant" },
+  { "id": "container-marketing-assistant", "label": "Marketing Assistant" }
+]

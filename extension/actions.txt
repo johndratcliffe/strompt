@@ -1,0 +1,129 @@
+Text Assistant
+-summarize
+-rephrase
+-change tone
+  -formal
+  -friendly
+  -blunt
+-paragraph -> notes (vice-versa)
+-reply
+
+Code Assistant
+-add comments
+-test cases
+-optimize/rename variables/clean-up
+-minify/prettify
+-convert legacy code
+
+Academic
+-cite
+  -harvard
+  -apa
+  -mla
+-layman's terms
+-keypoints
+-create table/chart
+
+Marketing/socialmedia/sales
+-reply to customer
+-notes to outreach email
+-bulletpoints to product description
+-seo optimization
+-tweet refactor
+-youtube description refactor
+-facebook post
+-hashtag generation
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MagiPaste Extension</title>
+  <style>
+    body {
+      width: 300px;
+      height: 200px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    button {
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    img {
+      width: 20px;
+      height: 20px;
+    }
+    .title, .language {
+      display: flex;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">
+    <div class="logo">
+      <img src="icon.png" />
+      <h3>MagiPaste</h3>
+    </div>
+    <h3>Free</h3>
+  </div>
+  <div class="language">
+    <h3>Language preference:</h3>
+    <select id="languageSelector">
+      <!-- Dynamically populate this with available languages -->
+    </select>
+  </div>
+  <button>Change context menu</button>
+  <button>Create Custom Actions</button>
+  <button>Upgrade</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+
+
+chrome.i18n.getAcceptLanguages((languages) => {
+  const preferredLanguage = languages[0]; // Get the first language
+  console.log("Preferred language:", preferredLanguage);
+  console.log(chrome.storage.sync.get('user'))
+  // Populate the language dropdown
+  const languageSelector = document.getElementById('languageSelector');
+  const availableLanguages = ['en', 'es', 'fr', 'de']; // You can expand this list
+  
+  // Get stored language preference
+  chrome.storage.sync.get('languagePreference', (data) => {
+    const selectedLanguage = data.languagePreference || preferredLanguage || 'en'; // Default to 'en' if no preference is stored
+
+    // Create the options for the language selector
+    availableLanguages.forEach((lang) => {
+      const option = document.createElement('option');
+      option.value = lang;
+      option.textContent = lang;
+      
+      // Set the default selected language based on storage or preferred
+      if (lang === selectedLanguage) {
+        option.selected = true;
+      }
+
+      languageSelector.appendChild(option);
+    });
+  });
+});
+
+// Save the selected language preference when the user changes it
+document.getElementById('languageSelector').addEventListener('change', (event) => {
+  const selectedLanguage = event.target.value;
+  chrome.storage.sync.set({ languagePreference: selectedLanguage }, () => {
+    console.log("Language preference saved:", selectedLanguage);
+  });
+});
+
+

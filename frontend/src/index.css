@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+body {
+  @apply font-sans antialiased text-gray-800;
+}
+
+html {
+  scroll-padding-top: 82px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.input-error {
+  background-color: #ffcccc !important;
+  border: 1px solid #ff0000 !important;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Style for the wrapper div when dragging over */
+.drag-over-before::before,
+.drag-over-after::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px; /* Line thickness */
+  background-color: #3b82f6; /* Blue color, adjust as needed */
+  z-index: 20; /* Ensure it's above the item content */
+}
+
+.drag-over-before::before {
+  top: -4px; /* Position line above the element */
+}
+
+.drag-over-after::after {
+  bottom: -4px; /* Position line below the element */
+}
+
+.drag-over-before > div,
+.drag-over-after > div {
+  opacity: 0.7;
+}
+
+.pointer-events-none {
+    pointer-events: none;
+}

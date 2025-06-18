@@ -1,0 +1,5 @@
+const CONFIG = {
+  API_KEY: "http://localhost:5000/api/callAI"
+}
+
+export default CONFIG

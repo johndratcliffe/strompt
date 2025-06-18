@@ -1,0 +1,24 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "main": "callAI.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "vercel": "^41.7.0"
+  },
+  "dependencies": {
+    "@hapi/iron": "^7.0.1",
+    "cookie": "^1.0.2",
+    "google-auth-library": "^9.15.1",
+    "iron-session": "^8.0.4",
+    "mongodb": "^6.16.0",
+    "ngrok": "^5.0.0-beta.2",
+    "stripe": "^18.1.0"
+  }
+}
