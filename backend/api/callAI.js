@@ -41,7 +41,7 @@ async function handler(req, res) {
             );
           } else {
             const newCount = userFromDb.dailyUsage.count + 1;
-            if ((userPlan === 'basic' && newCount > 50) || (userPlan === 'free' && newCount > 5)) {
+            if ((userPlan === 'basic' && newCount > 15) || (userPlan === 'free' && newCount > 5)) {
               return res.status(429).json({ error: "Daily limit reached" });
             }
             await users.updateOne(
@@ -166,14 +166,13 @@ async function handler(req, res) {
         };
         messages.push({ role: 'user', content: promptMessages[prompt] + input })
         messages.push({ role: 'system', content: "Only respond with one solution, do not give multiple options. Do not include introduction sentences/phrases, like: I'm happy to help..., here's the requested... Do not wrap the content like: ```javascript...``` or with \"\" or '' ." })
-      } else if (userPlan === 'pro') {
+      } else if (userPlan === 'pro' || onetime) {
         messages.push({ role: 'user', content: prompt })
       }
     } else if (action === 'generate') {
       messages.push({ role: 'user', content: prompt })
     }
 
-    console.log(messages)
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {

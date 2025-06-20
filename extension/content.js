@@ -150,10 +150,12 @@ class HelperComponent {
   handlePromptEnter(prompt) {
     this.lastAction = 'custom'
     this.isOpen = false;
+    this.dropdownIndex = null;
     this.iconImg.src = LOADING_ICON_SRC;
     this.updateMenuDisplay();
-
-    chrome.runtime.sendMessage(this.selectedText ? { type: 'getAiResponse', text: this.selectedText, prompt } : { type: 'generate', prompt } , (data) => {
+    this.input.blur()
+    this.input.value = ''
+    chrome.runtime.sendMessage(this.selectedText ? { type: 'getAiResponse', text: this.selectedText, prompt } : { type: 'generate', prompt, onetime: true } , (data) => {
       this.iconImg.src = ICON_SRC;
       if (data.error) return;
       this.lastResult = data.output;
@@ -205,6 +207,9 @@ class HelperComponent {
     const input = document.createElement('input')
     input.classList.add('input')
     input.placeholder = 'Quick prompt...'
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') this.handlePromptEnter(input.value)
+    })
     animateInner.appendChild(input);
     animateWidthInput.appendChild(animateInner)
   
@@ -247,11 +252,15 @@ class HelperComponent {
     this.contentContainer.style.left = '0';
     this.header.style.flexDirection = 'row';
     this.containerXOrient = 'right';
+    this.animateWidthInput.style.marginRight = '6px';
+    this.animateWidthInput.style.marginLeft = '0';
     if (this.containerXOrient === 'right' && this.contentContainer.getBoundingClientRect().left + this.contentContainer.querySelector('.menu-items').scrollWidth > document.documentElement.clientWidth) {
       this.contentContainer.style.right = `-${this.contentContainer.querySelector('.strompt-icon').getBoundingClientRect().width}px`
       this.contentContainer.style.left = 'auto';
       this.header.style.flexDirection = 'row-reverse';
       this.containerXOrient = 'left';
+      this.animateWidthInput.style.marginRight = '0';
+      this.animateWidthInput.style.marginLeft = '6px';
     }
   }
   
@@ -287,6 +296,8 @@ class HelperComponent {
         animateHeightMenu.classList.add('expanded');
       }
     } else {
+      this.animateWidthInput.style.marginRight = '0';
+      this.animateWidthInput.style.marginLeft = '0';
       this.animateWidthInput.classList.remove('expanded');
       animateWidthMenu.classList.remove('expanded');
       animateHeightMenu.classList.remove('expanded');
@@ -355,6 +366,7 @@ class HelperComponent {
         this.isOpen = true
         this.show()
         this.correctMenuPosition()
+        this.correctMenuOrientation()
         this.updateMenuDisplay()
       }
       if (
@@ -390,6 +402,16 @@ class HelperComponent {
       }
       if (e.composedPath()[0] === this.input) this.keepOpen = true
       else if (this.keepOpen) this.keepOpen = false
+    })
+
+    document.addEventListener('selectionchange', () => {
+      if (target === this.shadowContainer) return
+      const text = window.getSelection().toString().trim()
+      if (text) return
+      this.selectedText = ''
+      this.input.value = ''
+      this.hide()
+      this.updateMenuDisplay()
     })
 
     document.addEventListener('mouseup', (e) => {
@@ -546,7 +568,7 @@ class HelperComponent {
         display: grid; grid-template-rows: 0fr; overflow: hidden; transition: grid-template-rows 100ms ease;
       }
       .animate-height.expanded { grid-template-rows: 1fr; }
-      .animate-inner { min-width: 0; }
+      .animate-inner { min-width: 0; display: flex; align-items: center; }
       .menu-items { margin-bottom: 4px; }
       .menu-item-container { margin: 0 4px; }
       .menu-item-button {

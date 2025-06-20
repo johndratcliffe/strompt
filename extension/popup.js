@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'Code Assistant',
         'Academic Assistant',
         'Marketing/Social',
-        '15 Actions / Day',
+        '5 Actions / Day',
         'Community Forum'
       ],
       actions: [
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         'All Free features',
         'Smart Paste',
         'Context menu customization',
-        '100 Actions / Day',
+        '15 Actions / Day',
         'Email Support'
       ],
       actions: [
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       features: [
         'All Basic features',
         'Custom AI prompts',
-        'Customize Smart Paste',
+        'Smart Paste Customization',
         'Unlimited actions',
         'Priority email support'
       ],
@@ -111,15 +111,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Show contextmenu customization option for Basic and Pro plans
     if (user?.plan === 'basic' || user?.plan === 'pro') {
       document.getElementById('customize-menu').classList.remove('hidden');
-    } else {
-      document.getElementById('settings').classList.add('hidden');
-    }
-    
-    if (user?.plan === 'pro') {
       document.getElementById('smart-paste-option').classList.remove('hidden');
       document.getElementById('smart-paste-status-circle').classList.add('bg-green-500');
       document.getElementById('smart-paste-status-text').textContent = 'SmartPaste is active';
     } else {
+      document.getElementById('settings').classList.add('hidden');
       document.getElementById('smart-paste-option').classList.add('hidden');
       document.getElementById('smart-paste-status-circle').classList.add('bg-red-500');
       document.getElementById('smart-paste-status-text').textContent = 'SmartPaste is inactive';
@@ -130,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   function initializeEventListeners(user) {
     // Sign out button
     document.getElementById('sign-out').addEventListener('click', function() {
-      window.open('http://localhost:5173/profile', '_blank');
+      window.open('https://www.strompt.com/profile', '_blank');
     });
     
     // Customize menu button
@@ -164,26 +160,26 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // Open context menu settings
   function openContextMenuSettings() {
-    window.open('http://localhost:5173/contextmenu', '_blank');
+    window.open('https://www.strompt.com/contextmenu', '_blank');
   }
 
   // Toggle Smart Paste functionality
   function openSmartPasteSettings() {
-    window.open('http://localhost:5173/smartpaste', '_blank');
+    window.open('https://www.strompt.com/smartpaste', '_blank');
   }
 
   // Handle plan-related actions
   function handlePlanAction(action) {
     switch(action) {
       case 'upgrade-basic':
-        window.open('http://localhost:5173/pricing', '_blank');
+        window.open('https://www.strompt.com/pricing', '_blank');
         break;
       case 'upgrade-pro':
-        if (user?.plan === 'basic') window.open('http://localhost:5173/profile', '_blank');
-        else window.open('http://localhost:5173/pricing', '_blank');
+        if (user?.plan === 'basic') window.open('https://www.strompt.com/profile', '_blank');
+        else window.open('https://www.strompt.com/pricing', '_blank');
         break;
       case 'manage-subscription':
-        window.open('http://localhost:5173/profile', '_blank');
+        window.open('https://www.strompt.com/profile', '_blank');
         break;
       default:
         console.log('Unknown action:', action);

@@ -1,5 +1,5 @@
 const CONFIG = {
-  API_KEY: "http://localhost:5000/api/callAI"
+  API_KEY: "https://www.strompt.com/api/callAI"
 }
 
 export default CONFIG

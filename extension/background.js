@@ -1,4 +1,4 @@
-//import CONFIG from "./config.js";
+import CONFIG from "./config.js";
 
 const buildContextMenus = async (recommendations) => {
   chrome.contextMenus.removeAll();
@@ -225,13 +225,13 @@ chrome.storage.onChanged.addListener((changes, area) => {
   }
 })
 
-const aiResponse = async ({ input, prompt, action, custom, smartPasteOptions, reprompt, result }) => {
+const aiResponse = async ({ input, prompt, action, custom, smartPasteOptions, reprompt, result, onetime }) => {
   const userName = (await chrome.storage.sync.get('user')).user?.name
-  return fetch('http://localhost:5000/api/callAI'/* CONFIG.API_KEY */, {
+  return fetch(CONFIG.API_KEY, {
     method: "POST",
     credentials: 'include',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ input, prompt, action, model: 'llama-3.3-70b-versatile', custom, smartPasteOptions, userName })
+    body: JSON.stringify({ input, prompt, action, model: 'llama-3.3-70b-versatile', custom, smartPasteOptions, userName, onetime })
   })
 }
 
@@ -282,6 +282,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 // ------- KEYBIND -------
 chrome.commands.onCommand.addListener(async (command) => {
   if (command === "trigger-groq") {
+    const user = (await chrome.storage.sync.get('user')).user
+    if (!user) return
+    if (!user.plan !== 'Basic' && !user.plan !== 'Pro') return
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
     const action = 'keybind'
     chrome.scripting.executeScript({
