@@ -30,7 +30,7 @@
     "32": "icon_32.png"
   },
   "web_accessible_resources": [{
-    "resources": ["icon.png", "/content-react/dist/assets/index.js"],
+    "resources": ["icon.png"],
     "matches": ["<all_urls>"]
   }]
 }

@@ -22,12 +22,19 @@ function AppContent () {
   useEffect(() => {
     // Update page based on URL changes (basic example)
     const handlePopState = () => setCurrentPage(getPageFromUrl())
+    navigateTo(getPageFromUrl())
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
   function getPageFromUrl () {
-    const path = window.location.pathname
+    const base = '/frontend'
+    let path = window.location.pathname
+
+    if (path.startsWith(base)) {
+      path = path.slice(base.length) || '/'
+    }
+
     if (path === '/pricing') return 'pricing'
     if (path === '/login') return 'login'
     if (path === '/profile') return 'profile'

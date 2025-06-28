@@ -14,7 +14,6 @@ const CrossIcon = () => (
 )
 
 const PricingTier = ({ tier, isHighlighted = false, handlePlanSelect, authLoading, user, loadingPriceId }) => {
-  console.log(tier)
   return (
     <div className={`border rounded-lg p-6 flex flex-col ${isHighlighted ? 'border-blue-500 border-2 shadow-xl relative' : 'border-gray-300 bg-white'}`}>
       {isHighlighted && (
@@ -68,11 +67,11 @@ const PricingTier = ({ tier, isHighlighted = false, handlePlanSelect, authLoadin
                     : tier.cta)}
         </Button>
       )}
-      {tier.name === 'Free' && ( // Button for Free plan (maybe install?)
+      {tier.name === 'Free' && (
         <Button
           variant='outline'
           className='w-full mt-4'
-          onClick={() => alert('Install Action or Sign Up!')}
+          onClick={() => window.location.href = import.meta.env.VITE_CHROME_STORE_URL}
         >
           {tier.cta}
         </Button>

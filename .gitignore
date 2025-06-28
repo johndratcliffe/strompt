@@ -1,2 +1,4 @@
 *.env
 *.zip
+frontend/*dist/
+frontend/*node_modules

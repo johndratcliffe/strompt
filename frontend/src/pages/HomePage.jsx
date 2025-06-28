@@ -96,7 +96,7 @@ const HomePage = ({ onNavigate }) => { // Pass navigation handler
                 <PlaceholderIcon label='Clipboard' /> Step 4: Paste!
               </div>
             </div>
-            <Button variant='primary' size='lg' onClick={() => alert('Install Action!')}>
+            <Button variant='primary' size='lg' onClick={() => window.location.href = import.meta.env.VITE_CHROME_STORE_URL}>
               Install Free Extension Now
             </Button>
           </div>
@@ -191,7 +191,7 @@ const HomePage = ({ onNavigate }) => { // Pass navigation handler
         {/* Final CTA Section */}
         <section className='text-center py-16 mt-16 bg-blue-50 rounded-lg'>
           <h2 className='text-3xl font-bold text-gray-800 mb-6'>Ready to Supercharge Your Workflow?</h2>
-          <Button variant='primary' size='lg' onClick={() => alert('Install Action!')}>
+          <Button variant='primary' size='lg' onClick={() => window.location.href = import.meta.env.VITE_CHROME_STORE_URL}>
             Install Strompt Free
           </Button>
           <p className='mt-4'>
