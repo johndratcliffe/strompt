@@ -27,7 +27,6 @@ const stripe = new Stripe(STRIPE_SECRET_KEY, {
 
 
 async function handler(req, res) {
-    console.log('callback')
     if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !STRIPE_SECRET_KEY || !process.env.APP_BASE_URL) {
         return res.status(500).json({ error: "Auth/Stripe not configured" });
       }
@@ -39,7 +38,6 @@ async function handler(req, res) {
     }
 
     try {
-        console.log('hello')
         // Exchange code for tokens
         const { tokens } = await oAuth2Client.getToken(code);
         // oAuth2Client.setCredentials(tokens); // Set credentials for future API calls if needed
@@ -62,6 +60,8 @@ async function handler(req, res) {
         const googleId = payload.sub;
         const email = payload.email;
         const name = payload.name || ''; // Google might not always provide name
+        const givenName = payload.given_name || ''
+        const familyName = payload.family_name || ''
         const picture = payload.picture || ''; // Profile picture URL
 
         // --- DATABASE INTERACTION ---
@@ -109,6 +109,8 @@ async function handler(req, res) {
               googleId,
               email,
               name,
+              given_name: givenName,
+              family_name: familyName,
               picture,
               stripeCustomerId,
               createdAt: new Date()
@@ -134,6 +136,8 @@ async function handler(req, res) {
             id: user._id, // Your internal database user ID
             email: user.email,
             name: user.name,
+            given_name: user.given_name,
+            family_name: user.family_name,
             stripeCustomerId: stripeCustomerId // Needed for payments/portal
             // DO NOT store tokens or sensitive data here
         };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PricingTier from '../components/PricingTier'
 import { useAuth } from '../context/AuthContext' // Import useAuth
 import { loadStripe } from '@stripe/stripe-js'
@@ -9,6 +9,14 @@ const PricingPage = ({ onNavigate }) => { // Accept onNavigate
   const { user, loading: authLoading } = useAuth() // Get user state
   const [loadingPriceId, setLoadingPriceId] = useState(null) // Track loading state per button
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (window.fbq) {
+      window.fbq('track', 'PageView', {
+        page_path: window.location.pathname
+      });
+    }
+  }, [])
 
   // --- Pricing Data ---
   const tiers = [

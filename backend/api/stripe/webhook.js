@@ -1,6 +1,7 @@
 import Stripe from 'stripe'
 import { buffer } from 'micro'
 import { MongoClient } from 'mongodb'
+import { createHash } from 'crypto'
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET
@@ -8,6 +9,10 @@ const MONGODB_URI = process.env.MONGODB_URI
 const DB_NAME = process.env.DB_NAME
 const STRIPE_BASIC_PLAN_PRICE_ID = process.env.STRIPE_BASIC_PLAN_PRICE_ID
 const STRIPE_PRO_PLAN_PRICE_ID = process.env.STRIPE_PRO_PLAN_PRICE_ID
+
+function hash(data) {
+  return createHash("sha256").update(data).digest("hex");
+}
 
 if (!STRIPE_SECRET_KEY || !STRIPE_WEBHOOK_SECRET || !MONGODB_URI) {
   console.error("Missing required environment variables.");
@@ -62,6 +67,24 @@ export default async function handler(req, res) {
 
     switch (event.type) {
       case 'checkout.session.completed':
+        fetch(`https://graph.facebook.com/v18.0/${process.env.PIXEL_ID}/events?access_token=${process.env.PIXEL_ACCESS_TOKEN}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            data: [{
+                event_name: "Checkout Complete",
+                event_time: Math.floor(Date.now() / 1000),
+                user_data: {
+                  fn: [hash(req.session.user.given_name)],
+                  ln: [hash(req.session.user.family_name)],
+                  em: [hash(req.session.user.email)],
+                  client_user_agent: req.headers['user-agent'],
+                  client_ip_address: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket?.remoteAddress
+                },
+                action_source: "website"
+              }],
+          }),
+        })
         const session = event.data.object;
         if (session.mode === 'subscription' && session.subscription) {
           customerId = session.customer;

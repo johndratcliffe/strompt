@@ -58,6 +58,24 @@ async function handler(req, res) {
 
         // 4. Return the session ID to the frontend
         res.status(200).json({ sessionId: session.id });
+        fetch(`https://graph.facebook.com/v18.0/${process.env.PIXEL_ID}/events?access_token=${process.env.PIXEL_ACCESS_TOKEN}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            data: [{
+                event_name: "Checkout Initiated",
+                event_time: Math.floor(Date.now() / 1000),
+                user_data: {
+                  fn: [hash(req.session.user.given_name)],
+                  ln: [hash(req.session.user.family_name)],
+                  em: [hash(req.session.user.email)],
+                  client_user_agent: req.headers['user-agent'],
+                  client_ip_address: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket?.remoteAddress
+                },
+                action_source: "website"
+              }],
+          }),
+        })
 
     } catch (error) {
         console.error('Stripe Checkout Session Error:', error);

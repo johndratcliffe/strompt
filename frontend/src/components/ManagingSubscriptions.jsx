@@ -48,11 +48,11 @@ export const ManagingSubscriptions = ({ subscriptionStatus, onNavigate }) => {
           {managingSubscription ? 'Redirecting...' : 'Manage Billing & Subscription'}
         </Button>
         {subscriptionStatus === 'inactive' && (
-          <p className='text-sm text-gray-500 mt-2'>Upgrade your plan from the
+          <p className='text-sm text-gray-500 mt-2'>Upgrade your plan from the<span> </span>
             <a
               href='/pricing' className='text-blue-600 hover:underline' onClick={(e) => {
                 e.preventDefault() // Prevent default link behavior
-                onNavigate('/pricing') // Use the new navigation handler
+                onNavigate('pricing') // Use the new navigation handler
               }}
             >Pricing Page
             </a>.

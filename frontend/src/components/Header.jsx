@@ -37,7 +37,14 @@ const Header = ({ onNavigate }) => {
               : (
                 <>
                   <Button variant='secondary' onClick={() => onNavigate('login')}>Login</Button>
-                  <Button variant='primary' onClick={() => window.location.href = import.meta.env.VITE_CHROME_STORE_URL}>Install Free</Button>
+                  <Button variant='primary' onClick={() => {
+                    if (window.fbq) {
+                      window.fbq('track', 'ButtonClick', {
+                        button_name: 'Install'
+                      });
+                    }
+                    window.location.href = import.meta.env.VITE_CHROME_STORE_URL
+                  }}>Install Free</Button>
                 </>
                 )}
         </div>

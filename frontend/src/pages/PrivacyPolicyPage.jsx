@@ -3,7 +3,7 @@ const PrivacyPolicyPage = () => {
     <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-16'>
       <div className='max-w-3xl mx-auto'>
         <h1 className='text-3xl md:text-4xl font-bold text-gray-800 mb-6'>Privacy Policy</h1>
-        <p className='text-gray-600 mb-4'><strong>Last Updated:</strong> 18 June 2024</p>
+        <p className='text-gray-600 mb-4'><strong>Last Updated:</strong> 20 June 2025</p>
 
         <div className='space-y-8 text-gray-700'>
           <section>

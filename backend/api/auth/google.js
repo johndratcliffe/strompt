@@ -17,7 +17,6 @@ const oAuth2Client = new OAuth2Client(
 );
 
 export default function handler(req, res) {
-  console.log('google.js')
   if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !process.env.APP_BASE_URL) {
     return res.status(500).json({ error: "Google Auth not configured" });
   }

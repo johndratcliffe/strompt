@@ -17,7 +17,6 @@ async function getMongoClient() {
 
 async function handler(req, res) {
   const userSession = req.session.user;
-  //console.log(req)
   if (userSession) {
     try {
       const client = await getMongoClient();
