@@ -66,9 +66,9 @@ async function handler(req, res) {
                 event_name: "Checkout Initiated",
                 event_time: Math.floor(Date.now() / 1000),
                 user_data: {
-                  fn: [hash(req.session.user.given_name)],
-                  ln: [hash(req.session.user.family_name)],
-                  em: [hash(req.session.user.email)],
+                  fn: [req.session.user.given_name],
+                  ln: [req.session.user.family_name],
+                  em: [req.session.user.email],
                   client_user_agent: req.headers['user-agent'],
                   client_ip_address: req.headers['x-forwarded-for']?.split(',')[0].trim() || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket?.remoteAddress
                 },

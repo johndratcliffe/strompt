@@ -60,17 +60,49 @@ class HelperComponent {
         id: 'container-text-assistant',
         label: 'Text Assistant',
         items: [
-          { id: 'item-1', label: 'Summarize' },
-          { id: 'item-2', label: 'Change Tone' },
-          { id: 'item-5', label: 'Reply' },
+          { "id": "item-1", "label": "Summarize" },
+          { "id": "item-2", "label": "Change Tone" },
+          { "id": "item-3", "label": "Rephrase" },
+          { "id": "item-4", "label": "Notes" },
+          { "id": "item-5", "label": "Reply" },
         ],
       },
       {
         id: 'container-code-assistant',
         label: 'Code Assistant',
-        items: [{ id: 'item-4', label: 'Notes' }],
+        items: [
+          { "id": "item-6", "label": "Add Comments" },
+          { "id": "item-7", "label": "Generate Test Case" },
+          { "id": "item-8", "label": "Convert Legacy Code" },
+          { "id": "item-9", "label": "Refactor" },
+          { "id": "item-10", "label": "Minify/Prettify" }
+        ],
       },
-      { id: 'item-3', label: 'Rephrase' },
+      {
+        id: 'container-academic-assistant',
+        label: 'Academic Assistant',
+        items: [
+          { "id": "item-11", "label": "Cite" },
+          { "id": "item-12", "label": "Layman's Terms" },
+          { "id": "item-13", "label": "Keypoints" },
+          { "id": "item-14", "label": "Table" },
+          { "id": "item-15", "label": "Chart" },
+        ],
+      },
+      {
+        id: 'container-marketing-assistant',
+        label: 'Marketing Assistant',
+        items: [
+          { "id": "item-16", "label": "Reply to Customer" },
+          { "id": "item-17", "label": "Notes to Outreach Email" },
+          { "id": "item-18", "label": "Bulletpoints to Product Description" },
+          { "id": "item-19", "label": "SEO Optimization" },
+          { "id": "item-20", "label": "Tweet Refactor" },
+          { "id": "item-21", "label": "YouTube Description Refactor" },
+          { "id": "item-22", "label": "Facebook Post Refactor" },
+          { "id": "item-23", "label": "Hashtag Generation" }
+        ],
+      },
     ];
   }
 
